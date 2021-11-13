@@ -34,15 +34,16 @@ int ReadDrive(LPCWSTR  drive)
     {
         //Read Boost sector to find SV,SC,SB,NF,SF,....
         cout << "Read Boost Sector Success!\n\n";
-        cout << "Loai FAT: ";
         string format = ReadBytes2Str(boostSector, "5", "2", 8);
         Format* F;
         cout << format << endl;;
-        if (format.find("FAT32") != std::string::npos)
+        if (format.find("FAT") != std::string::npos)
         {
+            cout << "Loai FAT: " << format << endl;
             F = new FAT(boostSector);
         }
         else {
+            cout << "NTFS: \n";
             F = new NTFS(boostSector);
         }
         F->readBoostSector();
